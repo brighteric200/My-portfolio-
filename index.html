@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright DeV | Full-Stack Web Developer & Data Analyst</title>
+
+    <!-- Browser Tab Favicon -->
+    <link rel="icon" type="image/png" href="image_9.png">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom scrollbar and glassmorphism styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#hero" class="flex items-center gap-2.5 font-extrabold text-xl tracking-tight text-white group">
+                <div class="p-2 bg-purple-600/20 text-purple-400 rounded-lg border border-purple-500/30 group-hover:border-purple-500 transition">
+                    <i data-lucide="code-2" class="w-5 h-5"></i>
+                </div>
+                <span>Bright <span class="text-purple-400">DeV</span></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+                <a href="#about" class="hover:text-purple-400 transition">About</a>
+                <a href="#skills" class="hover:text-purple-400 transition">Skills</a>
+                <a href="#projects" class="hover:text-purple-400 transition">Projects</a>
+                <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
+            </nav>
+
+            <a href="#contact" class="hidden md:inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-500 text-white transition shadow-lg shadow-purple-600/20">
+                <span>Hire Me</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white focus:outline-none">
+                <i data-lucide="menu" id="icon-open" class="w-6 h-6"></i>
+                <i data-lucide="x" id="icon-close" class="w-6 h-6 hidden"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-6 py-4 space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1">About</a>
+            <a href="#skills" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1">Skills</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1">Projects</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1">Contact</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative py-20 lg:py-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Hero Text -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/60 border border-purple-800/50 text-purple-300 text-xs font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Available for Freelance & Full-Time Roles
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
+                    Engineering Modern Web Applications <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">&amp; Data Insights</span>
+                </h1>
+                
+                <p class="text-slate-400 text-base sm:text-lg max-w-2xl leading-relaxed">
+                    Hi, I'm <strong class="text-slate-200">Bright Eric</strong> (Bright DeV). I build fast, interactive, and responsive web applications alongside data analytics solutions.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#projects" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition flex items-center gap-2 shadow-lg shadow-purple-600/25">
+                        <i data-lucide="folder-code" class="w-4 h-4"></i>
+                        <span>Explore Projects</span>
+                    </a>
+                    <a href="#contact" class="px-6 py-3 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-medium text-sm transition flex items-center gap-2">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        <span>Contact Me</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Picture Container -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative group animate-float">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden border-2 border-slate-800 bg-slate-900 shadow-2xl">
+                        <!-- Profile Image -->
+                        <img src="image_7.png" alt="Bright Eric" class="w-full h-full object-cover object-top hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-16 bg-slate-900/50 border-y border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <h2 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">About Me</h2>
+                <h3 class="text-2xl sm:text-3xl font-bold text-white mb-4">Bridging Software Engineering &amp; Analytics</h3>
+                <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                    With a strong foundation in Computer Science and Mathematics, I specialize in crafting clean user interfaces, dynamic backend integrations, and data-driven analytical platforms. My focus is on writing maintainable code that delivers real value and flawless user experiences across web and mobile platforms.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Technical Toolkit</h2>
+            <h3 class="text-3xl font-bold text-white">Skills &amp; Expertise</h3>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <!-- Frontend Engineering -->
+            <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition">
+                <div class="w-10 h-10 rounded-lg bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
+                    <i data-lucide="layout" class="w-5 h-5"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-2">Frontend Engineering</h4>
+                <p class="text-slate-400 text-xs mb-4">Building responsive, accessible interfaces and web components.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-medium text-purple-300">
+                    <span class="px-2.5 py-1 bg-purple-950/50 border border-purple-800/40 rounded">JavaScript (ES6+)</span>
+                    <span class="px-2.5 py-1 bg-purple-950/50 border border-purple-800/40 rounded">Tailwind CSS</span>
+                    <span class="px-2.5 py-1 bg-purple-950/50 border border-purple-800/40 rounded">HTML5 / CSS3</span>
+                    <span class="px-2.5 py-1 bg-purple-950/50 border border-purple-800/40 rounded">Responsive Grid</span>
+                </div>
+            </div>
+
+            <!-- Backend & Databases -->
+            <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition">
+                <div class="w-10 h-10 rounded-lg bg-indigo-600/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4">
+                    <i data-lucide="server" class="w-5 h-5"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-2">Backend &amp; Databases</h4>
+                <p class="text-slate-400 text-xs mb-4">Developing scalable server API routes and database structures.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-medium text-indigo-300">
+                    <span class="px-2.5 py-1 bg-indigo-950/50 border border-indigo-800/40 rounded">Node.js</span>
+                    <span class="px-2.5 py-1 bg-indigo-950/50 border border-indigo-800/40 rounded">Express.js</span>
+                    <span class="px-2.5 py-1 bg-indigo-950/50 border border-indigo-800/40 rounded">PHP</span>
+                    <span class="px-2.5 py-1 bg-indigo-950/50 border border-indigo-800/40 rounded">MySQL / Database</span>
+                </div>
+            </div>
+
+            <!-- Data Analytics & Tools -->
+            <div class="p-6 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-purple-500/40 transition">
+                <div class="w-10 h-10 rounded-lg bg-emerald-600/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                    <i data-lucide="line-chart" class="w-5 h-5"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-2">Data Science &amp; Tooling</h4>
+                <p class="text-slate-400 text-xs mb-4">Analyzing metrics, operations data, and visual reporting.</p>
+                <div class="flex flex-wrap gap-2 text-xs font-medium text-emerald-300">
+                    <span class="px-2.5 py-1 bg-emerald-950/50 border border-emerald-800/40 rounded">Data Analytics</span>
+                    <span class="px-2.5 py-1 bg-emerald-950/50 border border-emerald-800/40 rounded">Git / GitHub</span>
+                    <span class="px-2.5 py-1 bg-emerald-950/50 border border-emerald-800/40 rounded">VS Code</span>
+                    <span class="px-2.5 py-1 bg-emerald-950/50 border border-emerald-800/40 rounded">UI/UX Design</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-20 bg-slate-900/40 border-t border-slate-800/60">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Featured Work</h2>
+                <h3 class="text-3xl font-bold text-white">Live Web Projects</h3>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- Project 1: Storyhub NG -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image.png" alt="Storyhub NG Literary Platform" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Storyhub NG — African Stories &amp; Fiction</h4>
+                                <span class="text-[11px] font-semibold bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-0.5 rounded-full">Web App</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Engaging literary web platform celebrating Nigerian stories, African fiction, romance, fantasy, and culture with custom book catalogs and reader authentication features.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">HTML5</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">CSS3</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">JavaScript</span>
+                        </div>
+                        <a href="https://tobweb.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Kingdom Minded Network -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_2.png" alt="Kingdom Minded Network Platform" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Kingdom Minded Network</h4>
+                                <span class="text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Community Platform</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Global faith-based network platform designed to connect believers, provide life-changing sermons, and host synchronized real-time prayer meetings and dashboards.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tailwind CSS</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">JavaScript</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Interactive UI</span>
+                        </div>
+                        <a href="https://kingdom-minded-network.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Feane Restaurant -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_3.png" alt="Feane Restaurant Web App" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Feane — Fast Food &amp; Restaurant</h4>
+                                <span class="text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full">Web App</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Responsive fast-food ordering and reservation interface built with dark hero sections, interactive menus, and table reservation workflows.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">HTML5</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">CSS3</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">JavaScript</span>
+                        </div>
+                        <a href="https://fastfud-1d933a.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4: Volthaus -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_4.png" alt="Volthaus Premium Home Appliances" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Volthaus — Premium Home Appliances</h4>
+                                <span class="text-[11px] font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded-full">E-Commerce</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Modern home appliances storefront featuring seasonal collections, category filtering, customer reviews, and interactive product catalogs.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">JavaScript</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tailwind CSS</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">UI Design</span>
+                        </div>
+                        <a href="https://astonishing-baklava-86ada1.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5: Baithak Furniture -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_5.png" alt="Baithak Furniture & Home Decor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Baithak — Furniture &amp; Decor</h4>
+                                <span class="text-[11px] font-semibold bg-stone-500/10 text-stone-300 border border-stone-500/20 px-2.5 py-0.5 rounded-full">E-Commerce UI</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Home furniture storefront design displaying curated interior layouts, product sliders, search filters, and smooth mobile navigation.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Frontend Web</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">UI Layout</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Grid</span>
+                        </div>
+                        <a href="https://keen-kelpie-1ce518.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6: Lekki Haven Real Estate -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_6.png" alt="Lekki Haven Real Estate Platform" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Lekki Haven — Real Estate</h4>
+                                <span class="text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">Real Estate</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Luxury real estate platform featuring fully-detached duplexes, penthouses, short-let apartments, inspection scheduling, and virtual tours.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Tailwind CSS</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">JavaScript</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">UI/UX</span>
+                        </div>
+                        <a href="https://stunning-licorice-b88acf.netlify.app/" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Live Demo</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+                <h2 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-2">Get In Touch</h2>
+                <h3 class="text-3xl font-bold text-white mb-4">Let's Work Together</h3>
+                <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                    Have a web project, custom web app, or data analytics task in mind? Send me a message and let's get started.
+                </p>
+
+                <div class="space-y-4 text-xs font-medium text-slate-300">
+                    <div class="flex items-center gap-3 p-4 rounded-xl bg-slate-900 border border-slate-800">
+                        <i data-lucide="mail" class="w-5 h-5 text-purple-400"></i>
+                        <div>
+                            <p class="text-slate-500 font-normal">Email</p>
+                            <p class="text-slate-200">brighteric200@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-4 rounded-xl bg-slate-900 border border-slate-800">
+                        <i data-lucide="phone" class="w-5 h-5 text-purple-400"></i>
+                        <div>
+                            <p class="text-slate-500 font-normal">Phone</p>
+                            <p class="text-slate-200">08135495235</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-4 rounded-xl bg-slate-900 border border-slate-800">
+                        <i data-lucide="github" class="w-5 h-5 text-purple-400"></i>
+                        <div>
+                            <p class="text-slate-500 font-normal">GitHub</p>
+                            <p class="text-slate-200">github.com/brighteric200</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web3Forms Contact Form -->
+            <div class="bg-slate-900/80 p-6 sm:p-8 rounded-2xl border border-slate-800 shadow-xl">
+                <form action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                    <input type="hidden" name="access_key" value="603bae5e-27b9-4e10-b9b1-3783867d33bc">
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Your Name</label>
+                        <input type="text" name="name" required class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-purple-500 transition" placeholder="John Doe">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Your Email</label>
+                        <input type="email" name="email" required class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-purple-500 transition" placeholder="john@example.com">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1">Message</label>
+                        <textarea name="message" rows="4" required class="w-full px-3.5 py-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-purple-500 transition" placeholder="Tell me about your project..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-xs transition shadow-lg shadow-purple-600/20">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-8 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Bright Eric (Bright DeV). All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('icon-open');
+            const closeIcon = document.getElementById('icon-close');
+
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                openIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+                openIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
