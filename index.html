@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080b16">
+    <meta name="color-scheme" content="dark light">
+    <script>
+        /* Apply the saved (or system) theme before first paint to avoid a flash */
+        (function () {
+            var t = 'dark';
+            try { t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); } catch (e) {}
+            document.documentElement.setAttribute('data-theme', t);
+            var m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.setAttribute('content', t === 'light' ? '#f8fafc' : '#080b16');
+        })();
+    </script>
     <link rel="icon" type="image/png" href="image_9.png">
     <link rel="apple-touch-icon" href="image_9.png">
 
@@ -12,8 +23,46 @@
     <title>Bright DeV | Full-Stack Web Developer & Data Analyst</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        /* Colors that change with the theme are driven by CSS variables (see #theme-vars) */
+        (function () {
+            const c = (v) => 'rgb(var(--' + v + ') / <alpha-value>)';
+            const scale = (p, shades) => Object.fromEntries(shades.map(s => [s, c(p + '-' + s)]));
+            tailwind.config = { theme: { extend: { colors: {
+                white: c('c-white'),
+                slate: scale('s', [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]),
+                purple: scale('p', [300, 400, 800, 950]),
+                indigo: scale('i', [300, 400, 800, 950]),
+                emerald: scale('e', [300, 400, 800, 950]),
+                amber: scale('a', [400]),
+                blue: scale('b', [400]),
+                stone: scale('st', [300])
+            } } } };
+        })();
+    </script>
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style id="theme-vars">
+        :root {
+            --c-white: 255 255 255;
+            --s-50: 248 250 252; --s-100: 241 245 249; --s-200: 226 232 240; --s-300: 203 213 225; --s-400: 148 163 184;
+            --s-500: 100 116 139; --s-600: 71 85 105; --s-700: 51 65 85; --s-800: 30 41 59; --s-900: 15 23 42; --s-950: 2 6 23;
+            --p-300: 216 180 254; --p-400: 192 132 252; --p-800: 107 33 168; --p-950: 59 7 100;
+            --i-300: 165 180 252; --i-400: 129 140 248; --i-800: 55 48 163; --i-950: 30 27 75;
+            --e-300: 110 231 183; --e-400: 52 211 153; --e-800: 6 95 70; --e-950: 2 44 34;
+            --a-400: 251 191 36; --b-400: 96 165 250; --st-300: 214 211 209;
+        }
+        html[data-theme="light"] {
+            --c-white: 15 23 42;
+            --s-50: 2 6 23; --s-100: 15 23 42; --s-200: 30 41 59; --s-300: 51 65 85; --s-400: 71 85 105;
+            --s-500: 100 116 139; --s-600: 148 163 184; --s-700: 203 213 225; --s-800: 226 232 240; --s-900: 255 255 255; --s-950: 248 250 252;
+            --p-300: 107 33 168; --p-400: 126 34 206; --p-800: 233 213 255; --p-950: 243 232 255;
+            --i-300: 55 48 163; --i-400: 67 56 202; --i-800: 199 210 254; --i-950: 224 231 255;
+            --e-300: 6 95 70; --e-400: 4 120 87; --e-800: 167 243 208; --e-950: 209 250 229;
+            --a-400: 180 83 9; --b-400: 29 78 216; --st-300: 68 64 60;
+        }
+    </style>
 
     <style id="visual-refresh">
         :root { color-scheme: dark; --accent: #a78bfa; --accent-2: #818cf8; }
@@ -213,6 +262,83 @@
             #bg-canvas, #cursor-glow { display: none; }
         }
     </style>
+
+    <style id="three-d-and-theme">
+        /* ---------- 3D hero stage ---------- */
+        #hero-3d { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        #hero .relative.w-64 { transform-style: preserve-3d; will-change: transform; }
+
+        /* 3D flip-up reveal for sections and cards */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal { transform: perspective(1000px) translateY(28px) rotateX(14deg) scale(.97); transform-origin: 50% 100%; }
+            .reveal.is-visible { transform: perspective(1000px) translateY(0) rotateX(0) scale(1); }
+        }
+
+        /* ---------- Theme toggle ---------- */
+        .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; border-radius: .75rem;
+            border: 1px solid rgb(var(--s-800) / .8); background: rgb(var(--s-900) / .6); color: rgb(var(--s-300));
+            transition: border-color .2s ease, color .2s ease, background-color .2s ease; }
+        .theme-toggle:hover { border-color: rgba(167,139,250,.65); color: rgb(var(--p-400)); }
+        .theme-toggle svg { width: 1.15rem; height: 1.15rem; }
+        .theme-toggle .icon-moon { display: none; }
+        html[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+        html[data-theme="light"] .theme-toggle .icon-moon { display: inline-block; }
+        .theme-toggle.is-flipping svg { animation: themeFlip .55s cubic-bezier(.3,.7,.2,1); }
+        @keyframes themeFlip {
+            0% { transform: perspective(200px) rotateY(0) scale(1); }
+            50% { transform: perspective(200px) rotateY(90deg) scale(.6); }
+            100% { transform: perspective(200px) rotateY(360deg) scale(1); }
+        }
+        html.theme-anim *, html.theme-anim *::before, html.theme-anim *::after {
+            transition: background-color .4s ease, border-color .4s ease, color .4s ease, fill .4s ease, stroke .4s ease, box-shadow .4s ease !important;
+        }
+
+        /* ---------- Light theme ---------- */
+        html[data-theme="light"] { color-scheme: light; }
+        html[data-theme="light"] body {
+            background-image: radial-gradient(ellipse at 12% 8%, rgba(124,58,237,.10), transparent 36%), radial-gradient(ellipse at 88% 28%, rgba(14,165,233,.08), transparent 32%);
+        }
+        html[data-theme="light"] ::selection { background: rgba(124,58,237,.25); color: #1e1b4b; }
+        html[data-theme="light"] ::-webkit-scrollbar-track { background: #f1f5f9; }
+        html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+        html[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        html[data-theme="light"] header { box-shadow: 0 8px 30px rgba(15,23,42,.06); }
+
+        /* Buttons with a purple fill keep white text */
+        html[data-theme="light"] a.bg-purple-600, html[data-theme="light"] button.bg-purple-600 { color: #fff; }
+        html[data-theme="light"] #back-to-top:hover { color: #fff; }
+
+        html[data-theme="light"] #about { background: linear-gradient(110deg, rgba(255,255,255,.92), rgba(241,245,249,.7)); }
+        html[data-theme="light"] #skills .grid > div { background: linear-gradient(145deg, #fff, #f5f3ff); box-shadow: 0 14px 35px rgba(76,29,149,.08); }
+        html[data-theme="light"] #skills .grid > div:hover { box-shadow: 0 22px 45px rgba(76,29,149,.15); }
+        html[data-theme="light"] #projects { background: linear-gradient(180deg, rgba(241,245,249,.85), rgba(248,250,252,.4)); }
+        html[data-theme="light"] #projects .grid > div { background: linear-gradient(145deg, #fff, #f8fafc); box-shadow: 0 18px 42px rgba(15,23,42,.08); }
+        html[data-theme="light"] #projects .grid > div:hover { box-shadow: 0 24px 50px rgba(76,29,149,.16); }
+        html[data-theme="light"] #projects .grid > div > div:first-child > div:first-child { background: #e2e8f0; }
+        html[data-theme="light"] #contact .space-y-4 > div { background: linear-gradient(110deg, #fff, #f8fafc); }
+        html[data-theme="light"] #contact form { background: linear-gradient(145deg, #fff, #f8fafc); box-shadow: 0 24px 65px rgba(15,23,42,.08); }
+        html[data-theme="light"] footer { background: rgba(255,255,255,.9); }
+
+        html[data-theme="light"] .filter-btn { border-color: rgba(100,116,139,.3); color: #475569; background: rgba(255,255,255,.9); }
+        html[data-theme="light"] .filter-btn:hover, html[data-theme="light"] .filter-btn[aria-pressed="true"] { color: #4c1d95; border-color: #8b5cf6; background: rgba(124,58,237,.12); }
+        html[data-theme="light"] .filter-btn .ripple { background: rgba(124,58,237,.25); }
+
+        html[data-theme="light"] .gradient-text { background-image: linear-gradient(100deg, #6d28d9, #4f46e5 55%, #0891b2); }
+        html[data-theme="light"] .typed-caret { background: #7c3aed; }
+        html[data-theme="light"] .tech-chip { background: rgba(255,255,255,.92); border-color: rgba(124,58,237,.3); color: #6d28d9; box-shadow: 0 12px 30px rgba(15,23,42,.12), 0 0 22px rgba(124,58,237,.14); }
+        html[data-theme="light"] .tech-chip.c2 { color: #0e7490; border-color: rgba(14,116,144,.3); }
+        html[data-theme="light"] .tech-chip.c3 { color: #047857; border-color: rgba(4,120,87,.3); }
+        html[data-theme="light"] .tech-chip.c4 { color: #be185d; border-color: rgba(190,24,93,.3); }
+        html[data-theme="light"] .stat-card { background: linear-gradient(145deg, #fff, #f5f3ff); border-color: rgba(100,116,139,.18); box-shadow: 0 16px 40px rgba(76,29,149,.08); }
+        html[data-theme="light"] .marquee { background: rgba(255,255,255,.65); border-color: rgba(100,116,139,.18); }
+        html[data-theme="light"] .marquee-item { color: #475569; background: #fff; border-color: rgba(100,116,139,.25); }
+        html[data-theme="light"] .marquee-item:hover { color: #1e1b4b; border-color: #8b5cf6; }
+        html[data-theme="light"] .marquee-item i, html[data-theme="light"] .marquee-item svg { color: #7c3aed; }
+        html[data-theme="light"] .skill-tag:hover { background-color: rgba(124,58,237,.14) !important; border-color: rgba(124,58,237,.5) !important; }
+        html[data-theme="light"] nav a.active { color: #6d28d9; }
+        html[data-theme="light"] .scroll-cue .mouse { border-color: #94a3b8; }
+        html[data-theme="light"] #cursor-glow { background: radial-gradient(circle, rgba(124,58,237,.10), rgba(14,165,233,.04) 45%, transparent 68%); }
+    </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
@@ -237,16 +363,24 @@
                 <a href="#contact" class="hover:text-purple-400 transition">Contact</a>
             </nav>
 
-            <a href="#contact" class="pulse-ring hidden md:inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-500 text-white transition shadow-lg shadow-purple-600/20">
-                <span>Hire Me</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-            </a>
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- Theme toggle -->
+                <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Switch to light theme" title="Switch theme">
+                    <i data-lucide="sun" class="icon-sun"></i>
+                    <i data-lucide="moon" class="icon-moon"></i>
+                </button>
 
-            <!-- Mobile Hamburger Button -->
-            <button id="menu-btn" aria-label="Toggle navigation menu" aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white focus:outline-none">
-                <i data-lucide="menu" id="icon-open" class="w-6 h-6"></i>
-                <i data-lucide="x" id="icon-close" class="w-6 h-6 hidden"></i>
-            </button>
+                <a href="#contact" class="pulse-ring hidden md:inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-full bg-purple-600 hover:bg-purple-500 text-white transition shadow-lg shadow-purple-600/20">
+                    <span>Hire Me</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="menu-btn" aria-label="Toggle navigation menu" aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white focus:outline-none">
+                    <i data-lucide="menu" id="icon-open" class="w-6 h-6"></i>
+                    <i data-lucide="x" id="icon-close" class="w-6 h-6 hidden"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Nav Menu -->
@@ -258,11 +392,13 @@
         </div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (with full-width 3D stage behind it) -->
+    <div id="hero-stage" class="relative overflow-hidden">
+    <canvas id="hero-3d" aria-hidden="true"></canvas>
     <section id="hero" class="relative py-20 lg:py-28 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
 <div class="hero-orb absolute -top-16 right-8 w-72 h-72 rounded-full bg-purple-600/10 blur-3xl" aria-hidden="true"></div>
 <div class="hero-orb absolute bottom-0 left-1/4 w-56 h-56 rounded-full bg-cyan-500/5 blur-3xl" aria-hidden="true"></div>
-        <div class="grid lg:grid-cols-12 gap-12 items-center relative">
+        <div class="grid lg:grid-cols-12 gap-12 items-center relative z-10">
             
             <!-- Hero Text -->
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -314,6 +450,7 @@
         </div>
         <div class="scroll-cue" aria-hidden="true"><div class="mouse"></div><span>Scroll</span></div>
     </section>
+    </div>
 
     <!-- STATS STRIP -->
     <section aria-label="Highlights" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 relative">
@@ -614,37 +751,37 @@
                     </div>
                 </div>
 
+                <!-- Project 7: AI Chatbot -->
+                <div data-category="web" class="project-card bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
+                            <img src="image_10.png" alt="Bright DeV AI Chatbot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">AI Chatbot — Intelligent Assistant</h4>
+                                <span class="text-[11px] font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded-full">AI App</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                An interactive AI chatbot designed to provide conversational assistance through a modern, user-friendly chat interface.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Artificial Intelligence</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Chatbot</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Web App</span>
+                        </div>
+                        <a href="https://chat-box.ai/app/chat/411db442-6347-4545-b906-6345c65222d3" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Try AI Bot</span>
+                            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
-</div>
-        
-<!-- Project 7: AI Chatbot -->
-<div data-category="web" class="project-card bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
-    <div>
-        <div class="w-full h-52 bg-slate-800 overflow-hidden relative border-b border-slate-800">
-            <img src="image_10.png" alt="Bright DeV AI Chatbot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
         </div>
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-3">
-                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">AI Chatbot — Intelligent Assistant</h4>
-                <span class="text-[11px] font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded-full">AI App</span>
-            </div>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">
-                An interactive AI chatbot designed to provide conversational assistance through a modern, user-friendly chat interface.
-            </p>
-        </div>
-    </div>
-    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
-        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
-            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Artificial Intelligence</span>
-            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Chatbot</span>
-            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Web App</span>
-        </div>
-        <a href="https://chat-box.ai/app/chat/411db442-6347-4545-b906-6345c65222d3" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
-            <span>Try AI Bot</span>
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-        </a>
-    </div>
-</div>     </div>
     </section>
 
     <!-- CONTACT SECTION -->
@@ -825,13 +962,16 @@
         const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-        /* 1. Particle constellation background, reacts to the mouse */
+        /* 1. Particle constellation background, reacts to the mouse (theme-aware) */
         const canvas = document.getElementById('bg-canvas');
         if (canvas && !reduce) {
             const ctx = canvas.getContext('2d');
             let w, h, dpr, particles = [], running = true;
             const mouse = { x: -9999, y: -9999 };
-            const colors = ['167,139,250', '129,140,248', '103,232,249'];
+            const PALS = { dark: ['167,139,250', '129,140,248', '103,232,249'], light: ['109,40,217', '79,70,229', '14,116,144'] };
+            let lightMode = document.documentElement.getAttribute('data-theme') === 'light';
+            let colors = PALS[lightMode ? 'light' : 'dark'];
+            window.addEventListener('themechange', e => { lightMode = e.detail === 'light'; colors = PALS[lightMode ? 'light' : 'dark']; });
             function resize() {
                 dpr = Math.min(window.devicePixelRatio || 1, 2);
                 w = canvas.width = innerWidth * dpr; h = canvas.height = innerHeight * dpr;
@@ -839,7 +979,7 @@
                 particles = Array.from({ length: n }, () => ({
                     x: Math.random() * w, y: Math.random() * h,
                     vx: (Math.random() - .5) * .25 * dpr, vy: (Math.random() - .5) * .25 * dpr,
-                    r: (Math.random() * 1.4 + .6) * dpr, c: colors[(Math.random() * colors.length) | 0]
+                    r: (Math.random() * 1.4 + .6) * dpr, ci: (Math.random() * 3) | 0, get c() { return colors[this.ci]; }
                 }));
             }
             addEventListener('resize', resize); resize();
@@ -862,13 +1002,13 @@
                     for (let j = i + 1; j < particles.length; j++) {
                         const q = particles[j], d = Math.hypot(p.x - q.x, p.y - q.y);
                         if (d < link) {
-                            ctx.strokeStyle = 'rgba(' + p.c + ',' + (.16 * (1 - d / link)) + ')';
+                            ctx.strokeStyle = 'rgba(' + p.c + ',' + ((lightMode ? .3 : .16) * (1 - d / link)) + ')';
                             ctx.lineWidth = dpr * .7;
                             ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
                         }
                     }
                     if (dm < mlink) {
-                        ctx.strokeStyle = 'rgba(196,181,253,' + (.35 * (1 - dm / mlink)) + ')';
+                        ctx.strokeStyle = 'rgba(' + (lightMode ? '109,40,217' : '196,181,253') + ',' + (.35 * (1 - dm / mlink)) + ')';
                         ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
                     }
                 }
@@ -941,7 +1081,7 @@
 
         /* 6. 3D tilt + glare */
         if (finePointer && !reduce) {
-            document.querySelectorAll('#skills .grid > div, .project-card').forEach(card => {
+            document.querySelectorAll('#skills .grid > div, .project-card, .stat-card').forEach(card => {
                 card.classList.add('tilt');
                 card.addEventListener('mousemove', e => {
                     const b = card.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
@@ -983,6 +1123,238 @@
         });
 
         lucide.createIcons();
+    })();
+    </script>
+
+    <!-- THEME TOGGLE -->
+    <script id="theme-js">
+    (function () {
+        const root = document.documentElement;
+        const btn = document.getElementById('theme-toggle');
+        const meta = document.querySelector('meta[name="theme-color"]');
+        let timer;
+
+        function setTheme(t, save) {
+            root.setAttribute('data-theme', t);
+            if (meta) meta.setAttribute('content', t === 'light' ? '#f8fafc' : '#080b16');
+            if (btn) btn.setAttribute('aria-label', t === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
+            if (save) { try { localStorage.setItem('theme', t); } catch (e) {} }
+            window.dispatchEvent(new CustomEvent('themechange', { detail: t }));
+        }
+
+        setTheme(root.getAttribute('data-theme') || 'dark', false);
+
+        if (btn) btn.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.classList.add('theme-anim');
+            btn.classList.remove('is-flipping'); void btn.offsetWidth; btn.classList.add('is-flipping');
+            setTheme(next, true);
+            clearTimeout(timer);
+            timer = setTimeout(() => root.classList.remove('theme-anim'), 600);
+        });
+
+        /* Follow the device setting until the visitor picks a theme themselves */
+        const mq = window.matchMedia('(prefers-color-scheme: light)');
+        const onSystem = e => {
+            try { if (localStorage.getItem('theme')) return; } catch (err) {}
+            setTheme(e.matches ? 'light' : 'dark', false);
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onSystem);
+    })();
+    </script>
+
+    <!-- 3D HERO SCENE (Three.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script id="hero-3d-js">
+    (function () {
+        const stage = document.getElementById('hero-stage');
+        const canvas = document.getElementById('hero-3d');
+        const photo = stage && stage.querySelector('#hero .relative.w-64');
+        const floater = photo && photo.parentElement;
+        if (!stage || !canvas || !photo || typeof THREE === 'undefined') { if (canvas) canvas.remove(); return; }
+
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        let renderer;
+        try { renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true }); }
+        catch (e) { canvas.remove(); return; }
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+        renderer.setClearColor(0x000000, 0);
+
+        const scene = new THREE.Scene();
+        const FOV = 40, CAM_Z = 12;
+        const camera = new THREE.PerspectiveCamera(FOV, 1, .1, 100);
+        camera.position.z = CAM_Z;
+
+        const ambient = new THREE.AmbientLight(0xffffff, .65); scene.add(ambient);
+        const l1 = new THREE.PointLight(0xa78bfa, 1.6, 40); l1.position.set(4, 3, 6); scene.add(l1);
+        const l2 = new THREE.PointLight(0x22d3ee, 1.2, 40); l2.position.set(-5, -3, 5); scene.add(l2);
+
+        /* Theme-aware palette */
+        const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
+        const PAL = {
+            dark:  { a: 0xa78bfa, b: 0x67e8f9, c: 0x818cf8, d: 0xf472b6, k: 1 },
+            light: { a: 0x7c3aed, b: 0x0891b2, c: 0x4f46e5, d: 0xdb2777, k: 1.4 }
+        };
+        const tinted = [];
+        function reg(mat, key, op) { mat.userData.key = key; mat.userData.op = op; tinted.push(mat); return mat; }
+        function applyPalette() {
+            const light = isLight(), p = light ? PAL.light : PAL.dark;
+            tinted.forEach(m => {
+                m.color.setHex(p[m.userData.key]);
+                if (m.emissive) m.emissive.setHex(p[m.userData.key]);
+                if (m.userData.op != null) m.opacity = Math.min(1, m.userData.op * p.k);
+            });
+            ambient.intensity = light ? .95 : .65;
+            l1.intensity = light ? 1.1 : 1.6;
+            l2.intensity = light ? .9 : 1.2;
+        }
+
+        /* Rig centered on the profile photo. Units: photo half-width = 1 */
+        const rig = new THREE.Group(); scene.add(rig);
+        const spin = new THREE.Group(); rig.add(spin);
+
+        const icoGeo = new THREE.IcosahedronGeometry(1.9, 1);
+        const ico = new THREE.LineSegments(new THREE.EdgesGeometry(icoGeo), reg(new THREE.LineBasicMaterial({ transparent: true }), 'a', .55));
+        const nodes = new THREE.Points(icoGeo, reg(new THREE.PointsMaterial({ size: .07, sizeAttenuation: true, transparent: true }), 'b', .95));
+        const octa = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.OctahedronGeometry(2.3, 0)), reg(new THREE.LineBasicMaterial({ transparent: true }), 'c', .3));
+        spin.add(ico, nodes, octa);
+
+        function makeRing(r, tube, key, rx, ry) {
+            const m = new THREE.Mesh(new THREE.TorusGeometry(r, tube, 8, 180), reg(new THREE.MeshBasicMaterial({ transparent: true }), key, .7));
+            m.rotation.set(rx, ry, 0); spin.add(m); return m;
+        }
+        const r1 = makeRing(1.55, .014, 'b', 1.15, .25);
+        const r2 = makeRing(1.78, .012, 'd', .45, 1.05);
+
+        const sats = [];
+        function makeSat(geo, key, parent, r, ang) {
+            const m = new THREE.Mesh(geo, reg(new THREE.MeshStandardMaterial({ metalness: .35, roughness: .3, flatShading: true, emissiveIntensity: .35 }), key));
+            m.position.set(Math.cos(ang) * r, Math.sin(ang) * r, 0);
+            parent.add(m); sats.push(m); return m;
+        }
+        makeSat(new THREE.OctahedronGeometry(.16), 'a', r1, 1.55, 0);
+        makeSat(new THREE.BoxGeometry(.2, .2, .2), 'd', r1, 1.55, Math.PI);
+        makeSat(new THREE.TetrahedronGeometry(.19), 'b', r2, 1.78, Math.PI / 2);
+        makeSat(new THREE.IcosahedronGeometry(.15, 0), 'c', r2, 1.78, Math.PI * 1.5);
+
+        /* Depth dust across the whole stage */
+        const N = innerWidth < 640 ? 140 : 280;
+        const dp = new Float32Array(N * 3);
+        for (let i = 0; i < N; i++) {
+            dp[i * 3] = Math.random() * 2 - 1;
+            dp[i * 3 + 1] = Math.random() * 2 - 1;
+            dp[i * 3 + 2] = -4 + Math.random() * 7;
+        }
+        const dustGeo = new THREE.BufferGeometry();
+        dustGeo.setAttribute('position', new THREE.BufferAttribute(dp, 3));
+        const dust = new THREE.Points(dustGeo, reg(new THREE.PointsMaterial({ size: .05, sizeAttenuation: true, transparent: true }), 'a', .7));
+        scene.add(dust);
+
+        /* Drifting wireframe shapes */
+        const debris = [];
+        const dGeos = [new THREE.BoxGeometry(1, 1, 1), new THREE.OctahedronGeometry(.75), new THREE.TetrahedronGeometry(.85), new THREE.IcosahedronGeometry(.7, 0)];
+        const dKeys = ['a', 'b', 'c', 'd'];
+        for (let i = 0; i < 8; i++) {
+            const m = new THREE.LineSegments(new THREE.EdgesGeometry(dGeos[i % 4]), reg(new THREE.LineBasicMaterial({ transparent: true }), dKeys[i % 4], .3));
+            m.scale.setScalar(.22 + Math.random() * .3);
+            m.userData = { nx: Math.random() * 2 - 1, ny: Math.random() * 2 - 1, z: -3 + Math.random() * 5, ph: Math.random() * 6.283, sp: .3 + Math.random() * .5, rx: (Math.random() - .5) * .02, ry: (Math.random() - .5) * .02, by: 0 };
+            scene.add(m); debris.push(m);
+        }
+
+        applyPalette();
+
+        /* Layout: map the photo's position to world space */
+        let W = 0, H = 0, ppu = 1, baseX = 0, baseY = 0, rigScale = 1, visW = 1, visH = 1;
+        function layout() {
+            W = stage.clientWidth; H = stage.clientHeight;
+            if (!W || !H) return;
+            renderer.setSize(W, H, false);
+            camera.aspect = W / H; camera.updateProjectionMatrix();
+            visH = 2 * Math.tan(THREE.MathUtils.degToRad(FOV / 2)) * CAM_Z;
+            visW = visH * camera.aspect;
+            ppu = H / visH;
+            let x = 0, y = 0, el = photo;
+            while (el && el !== stage) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+            const half = photo.offsetWidth / 2;
+            baseX = (x + half - W / 2) / ppu;
+            baseY = -((y + photo.offsetHeight / 2) - H / 2) / ppu;
+            rigScale = (half / ppu) * Math.min(1, (W * .47) / (half * 2.2));
+            dust.scale.set(visW * .62, visH * .62, 1);
+            debris.forEach(d => { d.position.x = d.userData.nx * visW * .48; d.userData.by = d.userData.ny * visH * .46; d.position.z = d.userData.z; });
+            if (!running) { update(STATIC_T, 1); render(); }
+        }
+
+        function floatOffset() {
+            try { return new DOMMatrix(getComputedStyle(floater).transform).m42 || 0; } catch (e) { return 0; }
+        }
+
+        /* Pointer */
+        let tx = 0, ty = 0, sx = 0, sy = 0;
+        if (!reduce) {
+            addEventListener('pointermove', e => {
+                if (e.pointerType === 'touch') return;
+                tx = e.clientX / innerWidth * 2 - 1; ty = e.clientY / innerHeight * 2 - 1;
+            }, { passive: true });
+        }
+
+        const STATIC_T = 1.2;
+        let running = false, inView = true, raf = 0, introStart = null;
+
+        function update(t, k) {
+            const sc = reduce ? 0 : window.scrollY;
+            const eased = 1 - Math.pow(1 - k, 3);
+            const bob = floater && !reduce ? floatOffset() : 0;
+            rig.position.set(baseX + sx * .12, baseY - bob / ppu, 0);
+            rig.scale.setScalar(rigScale * (.6 + .4 * eased));
+            rig.rotation.set(sy * .3, sx * .45, 0);
+            spin.rotation.set(t * .07, t * .18 + sc * .003 + (1 - eased) * 2.4, 0);
+            octa.rotation.y = -t * .35;
+            r1.rotation.z = t * .7;
+            r2.rotation.z = -t * .5;
+            for (let i = 0; i < sats.length; i++) { sats[i].rotation.x = t * (.8 + i * .15); sats[i].rotation.y = t * (.6 + i * .1); }
+            dust.rotation.y = Math.sin(t * .1) * .12 + sc * .0002;
+            for (let i = 0; i < debris.length; i++) {
+                const d = debris[i], u = d.userData;
+                d.rotation.x += u.rx; d.rotation.y += u.ry;
+                d.position.y = u.by + Math.sin(t * u.sp + u.ph) * .2;
+            }
+            if (finePointer && !reduce) {
+                photo.style.transform = 'perspective(900px) rotateX(' + (-sy * 7).toFixed(2) + 'deg) rotateY(' + (sx * 9).toFixed(2) + 'deg)';
+            }
+        }
+
+        function render() { renderer.render(scene, camera); }
+
+        function frame(ms) {
+            if (!running) return;
+            raf = requestAnimationFrame(frame);
+            const t = ms * .001;
+            if (introStart === null) introStart = t;
+            const idle = finePointer ? 0 : 1;
+            sx += ((tx + idle * Math.sin(t * .35) * .5) - sx) * .05;
+            sy += ((ty + idle * Math.cos(t * .28) * .3) - sy) * .05;
+            update(t, Math.min(1, (t - introStart) / 1.8));
+            render();
+        }
+        function start() { if (running || reduce || document.hidden || !inView) return; running = true; raf = requestAnimationFrame(frame); }
+        function stop() { running = false; cancelAnimationFrame(raf); }
+
+        layout();
+        if ('ResizeObserver' in window) new ResizeObserver(layout).observe(stage); else addEventListener('resize', layout);
+        addEventListener('load', layout);
+
+        window.addEventListener('themechange', () => { applyPalette(); if (!running) render(); });
+
+        if (reduce) { update(STATIC_T, 1); render(); }
+        else {
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(es => { inView = es[0].isIntersecting; inView ? start() : stop(); }, { threshold: 0 }).observe(stage);
+            }
+            document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+            start();
+        }
     })();
     </script>
 </body>
