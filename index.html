@@ -106,7 +106,7 @@
         #about > div { position: relative; }
         #about > div::before { content: ''; position: absolute; left: 0; top: 0; width: 3px; height: 100%; border-radius: 8px; background: linear-gradient(#a78bfa,rgba(129,140,248,.12)); }
         #about .max-w-3xl { padding-left: 1.5rem; }
-        #skills, #projects, #contact, #dashboard, #services, #journey, #github, #testimonials, #blog, #faq { scroll-margin-top: 5.5rem; }
+        #skills, #projects, #contact, #dashboard, #health, #services, #journey, #github, #testimonials, #blog, #faq { scroll-margin-top: 5.5rem; }
         #skills .grid > div { position: relative; overflow: hidden; border-radius: 1.15rem; background: linear-gradient(145deg, rgba(30,41,59,.65), rgba(15,23,42,.72)); box-shadow: 0 14px 35px rgba(0,0,0,.10); transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease; }
         #skills .grid > div::before { content: ''; position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg,transparent,rgba(167,139,250,.55),transparent); opacity: .65; }
         #skills .grid > div:hover { transform: translateY(-5px); border-color: rgba(167,139,250,.5); box-shadow: 0 22px 45px rgba(0,0,0,.22); }
@@ -310,6 +310,7 @@
         .case-btn:hover { background: rgba(124,58,237,.22); border-color: #a78bfa; }
         .case-btn svg { width: .8rem; height: .8rem; }
         .data-thumb { background: linear-gradient(135deg, #1e1b4b, #312e81 55%, #0e7490); }
+        .health-thumb { background: linear-gradient(135deg, #3b0764, #7f1d1d 60%, #0f766e); }
 
         .kpi { padding: 1rem 1.1rem; }
         .kpi .v { font-size: 1.55rem; font-weight: 800; letter-spacing: -.03em; color: rgb(var(--c-white)); line-height: 1.2; }
@@ -320,6 +321,18 @@
         .seg { display: inline-flex; border: 1px solid rgb(var(--s-700)); border-radius: .6rem; overflow: hidden; }
         .seg button { font-size: .74rem; font-weight: 600; padding: .5rem .9rem; color: rgb(var(--s-300)); background: transparent; }
         .seg button[aria-pressed="true"] { background: #7c3aed; color: #fff; }
+
+        .range { width: 100%; accent-color: #7c3aed; cursor: pointer; }
+        .slider-row { display: block; }
+        .slider-row .top { display: flex; justify-content: space-between; align-items: baseline; gap: .75rem; font-size: .76rem; font-weight: 700; color: rgb(var(--s-200)); margin-bottom: .3rem; }
+        .slider-row .top output { font-variant-numeric: tabular-nums; color: rgb(var(--p-400)); }
+        .slider-row small { display: block; font-size: .68rem; color: rgb(var(--s-400)); margin-top: .25rem; line-height: 1.5; }
+        .callout { border-radius: .8rem; border: 1px solid rgba(251,191,36,.35); background: rgba(251,191,36,.08); padding: .85rem 1rem; font-size: .78rem; line-height: 1.65; color: rgb(var(--s-300)); }
+        .callout strong { color: rgb(var(--c-white)); }
+        .src-list { font-size: .72rem; line-height: 1.8; color: rgb(var(--s-400)); }
+        .src-list a { text-decoration: underline; color: rgb(var(--p-400)); }
+        .pathway h4 { font-size: .9rem; font-weight: 800; color: rgb(var(--c-white)); margin-bottom: .45rem; }
+        .pathway ul { list-style: disc; padding-left: 1.05rem; font-size: .76rem; line-height: 1.7; color: rgb(var(--s-300)); }
 
         .svc-icon { width: 2.5rem; height: 2.5rem; border-radius: .7rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; background: rgba(124,58,237,.12); border: 1px solid rgba(167,139,250,.28); color: rgb(var(--p-400)); }
         .step { position: relative; padding-left: 3.1rem; }
@@ -435,6 +448,7 @@
                 <a href="#skills" class="hover:text-purple-400 transition">Skills</a>
                 <a href="#projects" class="hover:text-purple-400 transition">Projects</a>
                 <a href="#dashboard" class="hover:text-purple-400 transition">Dashboard</a>
+                <a href="#health" class="hover:text-purple-400 transition">Health Data</a>
                 <a href="#services" class="hover:text-purple-400 transition">Services</a>
                 <a href="#journey" class="hover:text-purple-400 transition">Journey</a>
                 <a href="#blog" class="hover:text-purple-400 transition">Notes</a>
@@ -472,6 +486,7 @@
             <a href="#skills" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Skills</a>
             <a href="#projects" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Projects</a>
             <a href="#dashboard" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Dashboard</a>
+            <a href="#health" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Health data</a>
             <a href="#services" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Services</a>
             <a href="#journey" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">Journey</a>
             <a href="#github" onclick="toggleMobileMenu()" class="block text-sm text-slate-300 hover:text-purple-400 py-1.5">GitHub</a>
@@ -551,7 +566,7 @@
     <!-- STATS STRIP -->
     <section aria-label="Highlights" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-14 relative">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="stat-card"><div class="text-3xl sm:text-4xl font-black gradient-text"><span data-count="9" id="stat-projects">9</span><span>+</span></div><p class="text-xs text-slate-400 mt-1 font-medium">Projects Shipped</p></div>
+            <div class="stat-card"><div class="text-3xl sm:text-4xl font-black gradient-text"><span data-count="10" id="stat-projects">10</span><span>+</span></div><p class="text-xs text-slate-400 mt-1 font-medium">Projects Shipped</p></div>
             <div class="stat-card"><div class="text-3xl sm:text-4xl font-black gradient-text"><span data-count="12">12</span><span>+</span></div><p class="text-xs text-slate-400 mt-1 font-medium">Technologies</p></div>
             <div class="stat-card"><div class="text-3xl sm:text-4xl font-black gradient-text"><span data-count="3">3</span></div><p class="text-xs text-slate-400 mt-1 font-medium">Core Disciplines</p></div>
             <div class="stat-card"><div class="text-3xl sm:text-4xl font-black gradient-text"><span data-count="100">100</span><span>%</span></div><p class="text-xs text-slate-400 mt-1 font-medium">Responsive Builds</p></div>
@@ -939,6 +954,40 @@
                     </div>
                 </div>
 
+                <!-- Project 10: Infectious Disease Analysis (lives on this page) -->
+                <div data-category="data" data-project="health" class="project-card bg-slate-900 border border-slate-800 rounded-xl overflow-hidden hover:border-purple-500/50 transition duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-52 health-thumb overflow-hidden relative border-b border-slate-800 flex items-end">
+                            <svg viewBox="0 0 400 208" preserveAspectRatio="none" class="absolute inset-0 w-full h-full" aria-hidden="true">
+                                <g fill="#fca5a5" opacity=".8"><rect x="50" y="170" width="38" height="38" rx="5"/><rect x="120" y="120" width="38" height="88" rx="5"/><rect x="190" y="96" width="38" height="112" rx="5"/><rect x="260" y="48" width="38" height="160" rx="5"/></g>
+                                <path d="M20 60 C80 70 120 110 180 90 S300 40 380 70" fill="none" stroke="#5eead4" stroke-width="3" stroke-dasharray="7 6"/>
+                                <circle cx="190" cy="92" r="5" fill="#5eead4"/><circle cx="300" cy="50" r="5" fill="#5eead4"/>
+                            </svg>
+                            <span class="relative m-4 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-black/40 text-rose-200 border border-rose-300/30">Interactive · lives on this page</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="text-xl font-bold text-white group-hover:text-purple-400 transition">Infectious Disease Analysis — Nigeria</h4>
+                                <span class="text-[11px] font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-0.5 rounded-full">Public Health</span>
+                            </div>
+                            <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                Data analysis of how poverty and sex-work-related risk factors shape HIV and other infection burdens in Nigeria, with sourced surveillance data and an interactive intervention scenario model.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex items-center justify-between">
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-medium text-slate-300">
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Chart.js</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Epidemiology</span>
+                            <span class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Modelling</span>
+                        </div>
+                        <a href="#health" class="text-purple-400 hover:text-purple-300 text-xs font-semibold flex items-center gap-1">
+                            <span>Open Analysis</span>
+                            <i data-lucide="arrow-down-right" class="w-3.5 h-3.5"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -987,6 +1036,109 @@
             </div>
             <p id="d-insight" class="mt-5 text-sm leading-relaxed" style="color:rgb(var(--s-300))"></p>
             <p class="text-[11px] muted mt-2">Sample dataset: 12 months, 4 regions, 5 categories, 3 channels. Built with vanilla JavaScript and Chart.js.</p>
+        </div>
+    </section>
+
+    <!-- HEALTH DATA ANALYSIS SECTION -->
+    <section id="health" class="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-8">
+            <p class="kicker mb-2">Public health data analysis</p>
+            <h2 class="section-title mb-3">Poverty, sex work and infectious disease in Nigeria</h2>
+            <p class="muted text-sm leading-relaxed">How deprivation and unequal access to prevention services shape the burden of HIV and other infections. The first half uses published surveillance figures. The second half is a transparent what-if model you can adjust.</p>
+        </div>
+
+        <div class="callout mb-6" role="note">
+            <strong>How to read this.</strong> These are associations, not proof that one thing causes another. Sex work does not by itself cause disease: risk is driven by how often condoms are used, access to testing, treatment and PrEP, violence, stigma, criminalisation and poverty that pushes people to accept unsafe terms. Figures come from different surveys and years, so comparisons are indicative.
+        </div>
+
+        <div class="surface p-4 sm:p-6">
+            <h3 class="text-sm font-bold mb-4" style="color:rgb(var(--c-white))">Part 1 · What the published data shows</h3>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6" id="h-kpis"></div>
+
+            <div class="grid lg:grid-cols-2 gap-4">
+                <div class="surface p-4">
+                    <h3 class="text-sm font-bold mb-1" style="color:rgb(var(--c-white))">HIV prevalence by population (%)</h3>
+                    <p class="text-[11px] muted mb-3">Adults from the 2018 national household survey; key populations from the 2020 biological and behavioural survey.</p>
+                    <div class="chart-box" style="height:15rem"><canvas id="c-hiv" role="img" aria-label="Bar chart of HIV prevalence in adults and key populations in Nigeria"></canvas></div>
+                </div>
+                <div class="surface p-4">
+                    <h3 class="text-sm font-bold mb-1" style="color:rgb(var(--c-white))">Multidimensional poverty (% of people poor)</h3>
+                    <p class="text-[11px] muted mb-3">National MPI 2022: health, education, living standards, work and security.</p>
+                    <div class="chart-box" style="height:15rem"><canvas id="c-pov" role="img" aria-label="Bar chart of multidimensional poverty rates in Nigeria"></canvas></div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4 mt-4">
+                <div class="surface p-4 pathway">
+                    <h4>Poverty pathway</h4>
+                    <ul>
+                        <li>High deprivation in sanitation, time to healthcare, food insecurity and housing (NBS 2022)</li>
+                        <li>Poor sanitation and crowding raise the risk of water-borne and respiratory infections such as cholera and tuberculosis</li>
+                        <li>Late care-seeking turns treatable infections into serious ones</li>
+                    </ul>
+                </div>
+                <div class="surface p-4 pathway">
+                    <h4>Sex-work risk pathway</h4>
+                    <ul>
+                        <li>Surveillance finds many partners and low consistent condom use, especially with regular partners</li>
+                        <li>HIV testing coverage targets were missed among key populations in 2020</li>
+                        <li>Stigma, violence and criminalisation keep people away from clinics</li>
+                    </ul>
+                </div>
+                <div class="surface p-4 pathway">
+                    <h4>Where they overlap</h4>
+                    <ul>
+                        <li>Economic need can lead to accepting condomless sex for higher pay</li>
+                        <li>Untreated STIs raise HIV risk, and HIV raises vulnerability to TB</li>
+                        <li>Cash support, free testing, PrEP and treatment attack both pathways at once</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="surface p-4 sm:p-6 mt-6">
+            <div class="flex flex-wrap items-start justify-between gap-3 mb-5">
+                <div class="max-w-2xl">
+                    <h3 class="text-sm font-bold mb-1" style="color:rgb(var(--c-white))">Part 2 · Intervention scenario model</h3>
+                    <p class="text-xs muted leading-relaxed">A simple closed-cohort model of 1,000 female sex workers followed for 5 years, starting at the 2020 survey HIV prevalence of 15.5%. Move the sliders to see how prevention coverage changes new infections. This is an illustration of the logic, not a forecast.</p>
+                </div>
+                <button type="button" id="h-reset" class="btn"><i data-lucide="rotate-ccw"></i>Reset</button>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-6">
+                <div class="lg:col-span-2 space-y-5">
+                    <label class="slider-row"><span class="top"><span>Consistent condom use</span><output id="o-c"></output></span>
+                        <input class="range" type="range" id="h-c" min="0" max="100" step="1" value="40" aria-label="Consistent condom use percent">
+                        <small>Baseline assumed 40%. Condoms are assumed to cut per-partnership risk by 80% when used consistently.</small></label>
+                    <label class="slider-row"><span class="top"><span>Regular HIV testing and treatment</span><output id="o-t"></output></span>
+                        <input class="range" type="range" id="h-t" min="0" max="100" step="1" value="55" aria-label="Regular HIV testing percent">
+                        <small>Baseline assumed 55%. People who test positive and stay on treatment become far less infectious.</small></label>
+                    <label class="slider-row"><span class="top"><span>PrEP uptake among HIV-negative</span><output id="o-p"></output></span>
+                        <input class="range" type="range" id="h-p" min="0" max="100" step="1" value="2" aria-label="PrEP uptake percent">
+                        <small>Baseline assumed 2%. PrEP is assumed to cut individual risk by 70% in typical use.</small></label>
+                    <label class="slider-row"><span class="top"><span>Livelihood and cash support coverage</span><output id="o-s"></output></span>
+                        <input class="range" type="range" id="h-s" min="0" max="100" step="1" value="0" aria-label="Livelihood support coverage percent">
+                        <small>The poverty lever. At full coverage, 30% of people who would otherwise skip condoms for economic reasons use them.</small></label>
+                </div>
+                <div class="lg:col-span-3">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4" id="h-sim-kpis"></div>
+                    <div class="chart-box"><canvas id="c-sim" role="img" aria-label="Line chart of projected HIV prevalence over five years, baseline versus scenario"></canvas></div>
+                </div>
+            </div>
+
+            <p id="h-insight" class="mt-5 text-sm leading-relaxed" style="color:rgb(var(--s-300))"></p>
+            <p class="text-[11px] muted mt-2">Model assumptions: starting prevalence 15.5% (UNAIDS, 2020); baseline new infections of 4 per 100 person-years among HIV-negative people is an assumption chosen for illustration; no turnover, deaths or migration; effects of the four levers are multiplied. Change the code to test other values.</p>
+
+            <div class="mt-6 pt-5 border-t" style="border-color:rgb(var(--s-800) / .8)">
+                <p class="text-xs font-bold mb-2" style="color:rgb(var(--c-white))">Sources</p>
+                <ul class="src-list">
+                    <li>UNAIDS, Nigeria country report 2020: FSW HIV prevalence 14% (2014) to 15.5% (2020), MSM 25%. <a href="https://open.unaids.org/sites/default/files/documents/Nigeria_Country%20Report_2020_formatted_EN.pdf" target="_blank" rel="noopener noreferrer">Report PDF</a></li>
+                    <li>Integrated Biological and Behavioural Surveillance Survey (IBBSS) 2020 to 2021, Sexually Transmitted Infections journal. <a href="https://sti.bmj.com/content/101/1/10" target="_blank" rel="noopener noreferrer">Article</a></li>
+                    <li>NACA presentation citing national adult HIV prevalence of 1.4% (NAIIS 2018). <a href="https://naca.gov.ng/wp-content/uploads/2021/06/SSLN_Nigeria-Link-and-Learn-Session_template_16June21.pdf" target="_blank" rel="noopener noreferrer">NACA slides</a></li>
+                    <li>National Bureau of Statistics, National Multidimensional Poverty Index 2022: 63% poor (133 million), rural 72%, urban 42%, state range 27% (Ondo) to 91% (Sokoto); monetary poverty 40.1% (2018/19).</li>
+                    <li>Coverage gaps: IBBSS 2020 prevention cascades. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11236907" target="_blank" rel="noopener noreferrer">Journal of the International AIDS Society</a></li>
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -1057,7 +1209,7 @@
                 <ul class="space-y-3 text-sm" style="color:rgb(var(--s-300))">
                     <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 mt-1 flex-none" style="color:rgb(var(--e-400))"></i>Websites for automotive, church, real estate, restaurant and e-commerce clients</li>
                     <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 mt-1 flex-none" style="color:rgb(var(--e-400))"></i>Firebase sign-in and content, Web3Forms contact flows, WhatsApp booking</li>
-                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 mt-1 flex-none" style="color:rgb(var(--e-400))"></i>Interactive dashboards and 3D web experiences</li>
+                    <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 mt-1 flex-none" style="color:rgb(var(--e-400))"></i>Interactive dashboards, public health data analysis and 3D web experiences</li>
                     <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-4 h-4 mt-1 flex-none" style="color:rgb(var(--e-400))"></i>Mobile-first, accessible, deployed on Netlify and GitHub Pages</li>
                 </ul>
             </div>
@@ -1267,6 +1419,7 @@
         <nav class="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4" aria-label="Footer">
             <a href="#projects" class="hover:text-purple-400">Projects</a>
             <a href="#dashboard" class="hover:text-purple-400">Dashboard</a>
+            <a href="#health" class="hover:text-purple-400">Health data</a>
             <a href="#services" class="hover:text-purple-400">Services</a>
             <a href="#github" class="hover:text-purple-400">GitHub</a>
             <a href="#blog" class="hover:text-purple-400">Build notes</a>
@@ -1338,7 +1491,7 @@
                     }
                 });
             }, { threshold: 0.12 });
-            document.querySelectorAll('#about, #skills .grid > div, #projects .project-card, #contact .grid > div, #dashboard > div, #services .grid > div, #journey .grid > div, #faq > div').forEach(el => {
+            document.querySelectorAll('#about, #skills .grid > div, #projects .project-card, #contact .grid > div, #dashboard > div, #health > div, #services .grid > div, #journey .grid > div, #faq > div').forEach(el => {
                 el.classList.add('reveal');
                 revealObserver.observe(el);
             });
@@ -1376,160 +1529,6 @@
                 closeIcon.classList.add('hidden');
             }
         }
-    </script>
-
-    <script id="lively-js">
-    (function () {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-        const canvas = document.getElementById('bg-canvas');
-        if (canvas && !reduce) {
-            const ctx = canvas.getContext('2d');
-            let w, h, dpr, particles = [], running = true;
-            const mouse = { x: -9999, y: -9999 };
-            const PALS = { dark: ['167,139,250', '129,140,248', '103,232,249'], light: ['109,40,217', '79,70,229', '14,116,144'] };
-            let lightMode = document.documentElement.getAttribute('data-theme') === 'light';
-            let colors = PALS[lightMode ? 'light' : 'dark'];
-            window.addEventListener('themechange', e => { lightMode = e.detail === 'light'; colors = PALS[lightMode ? 'light' : 'dark']; });
-            function resize() {
-                dpr = Math.min(window.devicePixelRatio || 1, 2);
-                w = canvas.width = innerWidth * dpr; h = canvas.height = innerHeight * dpr;
-                const n = Math.min(90, Math.floor(innerWidth / 16));
-                particles = Array.from({ length: n }, () => ({
-                    x: Math.random() * w, y: Math.random() * h,
-                    vx: (Math.random() - .5) * .25 * dpr, vy: (Math.random() - .5) * .25 * dpr,
-                    r: (Math.random() * 1.4 + .6) * dpr, ci: (Math.random() * 3) | 0, get c() { return colors[this.ci]; }
-                }));
-            }
-            addEventListener('resize', resize); resize();
-            addEventListener('mousemove', e => { mouse.x = e.clientX * dpr; mouse.y = e.clientY * dpr; }, { passive: true });
-            addEventListener('mouseout', () => { mouse.x = mouse.y = -9999; });
-            document.addEventListener('visibilitychange', () => { running = !document.hidden; if (running) draw(); });
-            const link = 130 * (window.devicePixelRatio > 1 ? 1.5 : 1), mlink = 170 * dpr;
-            function draw() {
-                if (!running) return;
-                ctx.clearRect(0, 0, w, h);
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    p.x += p.vx; p.y += p.vy;
-                    if (p.x < 0 || p.x > w) p.vx *= -1;
-                    if (p.y < 0 || p.y > h) p.vy *= -1;
-                    const dxm = p.x - mouse.x, dym = p.y - mouse.y, dm = Math.hypot(dxm, dym);
-                    if (dm < mlink) { p.x += dxm / dm * .6; p.y += dym / dm * .6; }
-                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
-                    ctx.fillStyle = 'rgba(' + p.c + ',.7)'; ctx.fill();
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const q = particles[j], d = Math.hypot(p.x - q.x, p.y - q.y);
-                        if (d < link) {
-                            ctx.strokeStyle = 'rgba(' + p.c + ',' + ((lightMode ? .3 : .16) * (1 - d / link)) + ')';
-                            ctx.lineWidth = dpr * .7;
-                            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-                        }
-                    }
-                    if (dm < mlink) {
-                        ctx.strokeStyle = 'rgba(' + (lightMode ? '109,40,217' : '196,181,253') + ',' + (.35 * (1 - dm / mlink)) + ')';
-                        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-                    }
-                }
-                requestAnimationFrame(draw);
-            }
-            draw();
-        }
-
-        const glow = document.getElementById('cursor-glow');
-        if (glow && finePointer && !reduce) {
-            let tx = innerWidth / 2, ty = innerHeight / 2, cx = tx, cy = ty;
-            addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; glow.classList.add('is-on'); }, { passive: true });
-            document.addEventListener('mouseleave', () => glow.classList.remove('is-on'));
-            (function loop() {
-                cx += (tx - cx) * .12; cy += (ty - cy) * .12;
-                glow.style.transform = 'translate3d(' + cx + 'px,' + cy + 'px,0)';
-                requestAnimationFrame(loop);
-            })();
-        }
-
-        const typed = document.getElementById('typed');
-        if (typed && !reduce) {
-            const roles = ['Full-Stack Web Developer', 'Data Analyst', 'UI/UX Enthusiast', 'Problem Solver'];
-            let r = 0, i = 0, del = false;
-            (function tick() {
-                const word = roles[r];
-                typed.textContent = word.slice(0, i);
-                let delay = del ? 45 : 85;
-                if (!del && i === word.length) { del = true; delay = 1600; }
-                else if (del && i === 0) { del = false; r = (r + 1) % roles.length; delay = 350; }
-                else i += del ? -1 : 1;
-                setTimeout(tick, delay);
-            })();
-        }
-
-        const counters = document.querySelectorAll('[data-count]');
-        function runCounter(el) {
-            const target = +el.dataset.count, dur = 1400, t0 = performance.now();
-            (function step(t) {
-                const p = Math.min((t - t0) / dur, 1), eased = 1 - Math.pow(1 - p, 3);
-                el.textContent = Math.round(target * eased);
-                if (p < 1) requestAnimationFrame(step);
-            })(t0);
-        }
-        if ('IntersectionObserver' in window && !reduce) {
-            counters.forEach(c => c.textContent = '0');
-            const co = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { runCounter(e.target); o.unobserve(e.target); } }), { threshold: .6 });
-            counters.forEach(c => co.observe(c));
-        }
-
-        document.querySelectorAll('#skills .grid > div span.px-2\\.5').forEach(t => t.classList.add('skill-tag'));
-        document.querySelectorAll('.skill-tag').forEach((t, idx) => { t.style.transitionDelay = (.25 + (idx % 4) * .08) + 's'; });
-        if ('IntersectionObserver' in window) {
-            const groups = ['#skills .grid', '#projects .grid', '#contact .grid'];
-            groups.forEach(sel => document.querySelectorAll(sel).forEach(g => {
-                [...g.children].forEach((el, i) => {
-                    if (!el.classList.contains('reveal')) return;
-                    el.style.transitionDelay = (i * 0.12) + 's';
-                    const o = new IntersectionObserver(es => es.forEach(e => {
-                        if (e.isIntersecting) { setTimeout(() => { el.style.transitionDelay = ''; }, 1400); o.disconnect(); }
-                    }), { threshold: .12 });
-                    o.observe(el);
-                });
-            }));
-        }
-
-        if (finePointer && !reduce) {
-            document.querySelectorAll('#skills .grid > div, .project-card, .stat-card').forEach(card => {
-                card.classList.add('tilt');
-                card.addEventListener('mousemove', e => {
-                    const b = card.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
-                    card.classList.add('is-tilting');
-                    card.style.setProperty('--mx', x * 100 + '%'); card.style.setProperty('--my', y * 100 + '%');
-                    card.style.transform = 'perspective(900px) rotateX(' + ((.5 - y) * 7) + 'deg) rotateY(' + ((x - .5) * 9) + 'deg) translateY(-5px)';
-                });
-                card.addEventListener('mouseleave', () => { card.classList.remove('is-tilting'); card.style.transform = ''; });
-            });
-        }
-
-        const navLinks = document.querySelectorAll('header nav a');
-        if ('IntersectionObserver' in window && navLinks.length) {
-            const map = {};
-            navLinks.forEach(a => { map[a.getAttribute('href').slice(1)] = a; });
-            const spy = new IntersectionObserver(es => es.forEach(e => {
-                if (e.isIntersecting) { navLinks.forEach(a => a.classList.remove('active')); map[e.target.id] && map[e.target.id].classList.add('active'); }
-            }), { rootMargin: '-45% 0px -50% 0px' });
-            Object.keys(map).forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
-        }
-
-        document.querySelectorAll('#hero a, #hero button, #contact button, .filter-btn, header a.rounded-full').forEach(btn => {
-            btn.classList.add('ripple-host');
-            btn.addEventListener('click', e => {
-                const b = btn.getBoundingClientRect(), size = Math.max(b.width, b.height), s = document.createElement('span');
-                s.className = 'ripple';
-                s.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (e.clientX - b.left - size / 2) + 'px;top:' + (e.clientY - b.top - size / 2) + 'px';
-                btn.appendChild(s); setTimeout(() => s.remove(), 650);
-            });
-        });
-
-        lucide.createIcons();
-    })();
     </script>
 
     <script id="lively-js">
@@ -1959,7 +1958,11 @@
             { id: 'dashboard', title: 'Retail Analytics Dashboard', tag: 'Data', img: '', url: '#dashboard', linkLabel: 'Open Dashboard', internal: true, stack: ['Chart.js', 'Data Analytics', 'JavaScript'],
               problem: 'Sales data sitting in spreadsheets is hard to act on. Managers need to see trends, mix and growth at a glance.',
               solution: 'I generated a realistic sample dataset and built filters, KPI cards, a trend line, a category bar chart and a channel doughnut that all recalculate together, plus a CSV export of whatever is filtered.',
-              features: ['Region and category filters', 'KPI cards with month-on-month change', 'Three linked charts', 'One-click CSV export', 'Auto-written insight sentence'] }
+              features: ['Region and category filters', 'KPI cards with month-on-month change', 'Three linked charts', 'One-click CSV export', 'Auto-written insight sentence'] },
+            { id: 'health', title: 'Infectious Disease Analysis — Nigeria', tag: 'Public Health', img: '', thumb: 'health-thumb', url: '#health', linkLabel: 'Open Analysis', internal: true, stack: ['Chart.js', 'Epidemiology', 'Scenario modelling', 'JavaScript'],
+              problem: 'Poverty and gaps in prevention services shape who gets infected and who gets treated, but the evidence is scattered across surveys. Decision makers need one clear picture, and a way to ask what would change it.',
+              solution: 'I pulled published figures from UNAIDS, the national HIV surveillance survey and the National Bureau of Statistics into linked charts, then built a transparent cohort model where condom use, testing and treatment, PrEP and livelihood support can be adjusted to see the effect on new infections.',
+              features: ['Sourced HIV prevalence comparison across adults and key populations', 'Multidimensional poverty by area type and state extremes', 'Interactive 5-year scenario model with four prevention levers', 'Auto-written insight that reports infections averted', 'Plain-language limits: associations, not causation'] }
         ];
 
         const TIMELINE = [
@@ -1980,7 +1983,10 @@
               body: '<p>The 3D scene behind my profile photo looks heavy, but it follows a few rules that keep it smooth on mid-range phones.</p><h5>The rules</h5><ul><li>Cap the pixel ratio at 2 so high-density screens do not render four times the pixels</li><li>Stop the render loop when the hero is off-screen or the tab is hidden</li><li>Use fewer particles on small screens</li><li>Ignore hover effects on touch devices</li><li>Show a still frame when the visitor prefers reduced motion</li><li>If WebGL is unavailable, remove the canvas and let the page work without it</li></ul><pre>renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));\nnew IntersectionObserver(([e]) => e.isIntersecting ? start() : stop()).observe(stage);\ndocument.addEventListener("visibilitychange", () => document.hidden ? stop() : start());</pre><h5>The lesson</h5><p>A decorative effect should never cost the visitor anything. If it cannot pause itself, it does not ship.</p>' },
             { id: 'theme', title: 'Dark and light themes with Tailwind CDN', date: 'Oct 2026', read: '2 min read', tags: ['Tailwind', 'CSS'],
               summary: 'Map Tailwind colours to CSS variables and flip a single attribute to change the whole site.',
-              body: '<p>Tailwind classes are fixed colours, so a theme switch normally means rewriting every class. A cleaner way is to point Tailwind at CSS variables.</p><h5>Steps</h5><ul><li>Define colours as space-separated RGB numbers in CSS variables</li><li>In the Tailwind config, map each colour to <code>rgb(var(--name) / &lt;alpha-value&gt;)</code> so opacity classes like <code>bg-slate-900/60</code> still work</li><li>Redefine the same variables under <code>html[data-theme="light"]</code></li><li>Set the theme from a tiny inline script before first paint to avoid a flash of the wrong theme</li><li>Save the visitor\'s choice, and follow their device setting until they pick one</li></ul><pre>const c = v => "rgb(var(--" + v + ") / &lt;alpha-value&gt;)";\ntailwind.config = { theme: { extend: { colors: { slate: { 900: c("s-900") } } } } };</pre><h5>Result</h5><p>One attribute on the html element changes every colour on the page, including charts and the 3D scene when they listen for the theme change event.</p>' }
+              body: '<p>Tailwind classes are fixed colours, so a theme switch normally means rewriting every class. A cleaner way is to point Tailwind at CSS variables.</p><h5>Steps</h5><ul><li>Define colours as space-separated RGB numbers in CSS variables</li><li>In the Tailwind config, map each colour to <code>rgb(var(--name) / &lt;alpha-value&gt;)</code> so opacity classes like <code>bg-slate-900/60</code> still work</li><li>Redefine the same variables under <code>html[data-theme="light"]</code></li><li>Set the theme from a tiny inline script before first paint to avoid a flash of the wrong theme</li><li>Save the visitor\'s choice, and follow their device setting until they pick one</li></ul><pre>const c = v => "rgb(var(--" + v + ") / &lt;alpha-value&gt;)";\ntailwind.config = { theme: { extend: { colors: { slate: { 900: c("s-900") } } } } };</pre><h5>Result</h5><p>One attribute on the html element changes every colour on the page, including charts and the 3D scene when they listen for the theme change event.</p>' },
+            { id: 'epi', title: 'Modelling prevention coverage for HIV in a small cohort', date: 'Oct 2026', read: '3 min read', tags: ['Epidemiology', 'JavaScript'],
+              summary: 'How the scenario model on this page turns four coverage sliders into infections averted.',
+              body: '<p>The health analysis section ends with a what-if model. It is deliberately simple so every assumption can be read, questioned and changed.</p><h5>The structure</h5><p>A cohort of 1,000 people starts at the surveyed HIV prevalence. Each year, HIV-negative people become infected at a baseline rate, multiplied by a relative risk made from four factors: consistent condom use, the share of positive people on effective treatment, PrEP uptake and livelihood support that reduces economically driven condomless sex.</p><pre>risk = (1 - 0.8 * condomUse)\n     * (1 - 0.96 * suppressedShare)\n     * (1 - 0.7 * prepUptake);\nincidence = baseIncidence * risk / baselineRisk;</pre><h5>Being honest about limits</h5><ul><li>The baseline incidence is an assumption, not a measured value</li><li>There is no turnover, migration or death</li><li>Survey figures from different years are only roughly comparable</li><li>It shows direction and rough size of effects, not a prediction</li></ul><h5>Why build it</h5><p>A chart tells you where things stand. A model lets a decision maker ask which lever matters most, and see the answer move as they change it.</p>' }
         ];
 
         const SKILLS_TXT = 'Frontend: JavaScript (ES6+), Tailwind CSS, HTML5/CSS3, responsive grid. Backend: Node.js, Express.js, PHP, MySQL. Data and tools: data analytics, Git/GitHub, VS Code, UI/UX design.';
@@ -2008,7 +2014,7 @@
             const p = PROJECTS[i], next = PROJECTS[(i + 1) % PROJECTS.length];
             const hero = p.img
                 ? '<img src="' + esc(p.img) + '" alt="' + esc(p.title) + ' screenshot" class="w-full h-48 sm:h-60 object-cover" onerror="this.style.display=\'none\'">'
-                : '<div class="data-thumb h-48 sm:h-60"></div>';
+                : '<div class="' + (p.thumb || 'data-thumb') + ' h-48 sm:h-60"></div>';
             openModal(
                 '<div class="relative">' + hero +
                 '<button id="modal-close" type="button" aria-label="Close" class="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center bg-black/60 text-white hover:bg-black/80"><i data-lucide="x" class="w-4 h-4"></i></button></div>' +
@@ -2020,7 +2026,7 @@
                 '<h5>Key features</h5><ul>' + p.features.map(f => '<li>' + esc(f) + '</li>').join('') + '</ul>' +
                 '<h5>Built with</h5><div class="flex flex-wrap gap-2 mt-1">' + p.stack.map(s => '<span class="chip">' + esc(s) + '</span>').join('') + '</div>' +
                 '<div class="flex flex-wrap gap-3 mt-7">' +
-                '<a class="btn btn-primary" href="' + esc(p.url) + '"' + (p.internal ? ' data-close-goto="dashboard"' : ' target="_blank" rel="noopener noreferrer"') + '>' + esc(p.linkLabel || 'Live Demo') + '</a>' +
+                '<a class="btn btn-primary" href="' + esc(p.url) + '"' + (p.internal ? ' data-close-goto="' + esc(p.url.slice(1)) + '"' : ' target="_blank" rel="noopener noreferrer"') + '>' + esc(p.linkLabel || 'Live Demo') + '</a>' +
                 '<button type="button" class="btn" data-open-project="' + next.id + '">Next: ' + esc(next.title.split(' — ')[0]) + '</button>' +
                 '<a class="btn" href="#contact" data-close-goto="contact">Want something similar?</a></div></div>'
             );
@@ -2171,6 +2177,133 @@
         renderDashboard();
         if (!window.Chart) $$('.chart-box').forEach(b => { b.innerHTML = '<p class="muted text-xs p-4">Charts could not load. Check your connection and refresh.</p>'; });
 
+        /* ===== Health analysis: poverty, sex work and infectious disease in Nigeria ===== */
+        const HIV_BARS = [
+            ['Adults (2018)', 1.4],
+            ['People who inject drugs (2020)', 10.9],
+            ['Female sex workers (2020)', 15.5],
+            ['Men who have sex with men (2020)', 25]
+        ];
+        const POV_BARS = [
+            ['Ondo (lowest state)', 27],
+            ['Urban areas', 42],
+            ['Nigeria overall', 63],
+            ['Rural areas', 72],
+            ['Sokoto (highest state)', 91]
+        ];
+        const FSW_2014 = 14, FSW_2020 = 15.5, ADULT_HIV = 1.4, MPI_NATIONAL = 63;
+        const H_BASE = { c: .40, t: .55, p: .02, s: 0 };
+        const H_INC = .04, H_YEARS = 5, H_START = .155, H_N = 1000;
+        const hDefaults = { c: 40, t: 55, p: 2, s: 0 };
+        const hs = { c: 40, t: 55, p: 2, s: 0 };
+        const hCharts = {};
+
+        $('#h-kpis').innerHTML = [
+            ['Adult HIV prevalence', ADULT_HIV + '%', 'National survey, 2018'],
+            ['Female sex workers', FSW_2020 + '%', 'Up from ' + FSW_2014 + '% in 2014'],
+            ['Relative burden', '≈' + Math.round(FSW_2020 / ADULT_HIV) + '×', 'FSW vs adults (indicative)'],
+            ['Multidimensionally poor', MPI_NATIONAL + '%', '133 million people, 2022']
+        ].map(k => '<div class="surface kpi"><p class="l">' + k[0] + '</p><p class="v">' + k[1] + '</p><p class="l" style="font-weight:500">' + k[2] + '</p></div>').join('');
+
+        function hRisk(c, t, p, s) {
+            const cEff = c + (1 - c) * .30 * s;
+            const condom = 1 - .8 * cEff;
+            const suppressed = Math.min(1, t * .75) * .9;
+            const infectious = 1 - .96 * suppressed;
+            const prep = 1 - .7 * p;
+            return condom * infectious * prep;
+        }
+        function hSim(c, t, p, s) {
+            const rel = hRisk(c, t, p, s) / hRisk(H_BASE.c, H_BASE.t, H_BASE.p, H_BASE.s);
+            const inc = H_INC * rel;
+            let pos = H_N * H_START, neg = H_N - pos, cum = 0;
+            const prev = [pos / H_N * 100];
+            for (let y = 0; y < H_YEARS; y++) { const n = neg * inc; neg -= n; pos += n; cum += n; prev.push(pos / H_N * 100); }
+            return { prev: prev, cum: cum, inc: inc };
+        }
+        function hVals() { return { c: hs.c / 100, t: hs.t / 100, p: hs.p / 100, s: hs.s / 100 }; }
+
+        function hRender() {
+            ['c', 't', 'p', 's'].forEach(k => { $('#o-' + k).textContent = hs[k] + '%'; });
+            const v = hVals();
+            const base = hSim(H_BASE.c, H_BASE.t, H_BASE.p, H_BASE.s), scen = hSim(v.c, v.t, v.p, v.s);
+            const averted = base.cum - scen.cum;
+            const pct = base.cum ? averted / base.cum * 100 : 0;
+            const endB = base.prev[H_YEARS], endS = scen.prev[H_YEARS];
+            $('#h-sim-kpis').innerHTML = [
+                ['New infections (5 yr)', num(scen.cum), 'per 1,000 people'],
+                ['Baseline (5 yr)', num(base.cum), 'current coverage'],
+                ['Infections averted', (averted >= 0 ? '' : '−') + num(Math.abs(averted)), (pct >= 0 ? pct.toFixed(0) : '+' + Math.abs(pct).toFixed(0)) + '% ' + (pct >= 0 ? 'fewer' : 'more')],
+                ['Prevalence in year 5', endS.toFixed(1) + '%', 'baseline ' + endB.toFixed(1) + '%']
+            ].map(k => '<div class="surface kpi"><p class="l">' + k[0] + '</p><p class="v">' + k[1] + '</p><p class="l" style="font-weight:500">' + k[2] + '</p></div>').join('');
+
+            const changed = ['c', 't', 'p', 's'].filter(k => hs[k] !== hDefaults[k]);
+            const names = { c: 'condom use', t: 'testing and treatment', p: 'PrEP uptake', s: 'livelihood support' };
+            $('#h-insight').innerHTML = '<strong style="color:rgb(var(--c-white))">Insight:</strong> ' + esc(
+                changed.length
+                    ? 'With ' + changed.map(k => names[k] + ' at ' + hs[k] + '%').join(', ') + ', this model gives ' + num(scen.cum) + ' new infections per 1,000 people over five years against ' + num(base.cum) + ' at current coverage. That is ' + num(Math.abs(averted)) + ' ' + (averted >= 0 ? 'averted' : 'extra') + ' (' + Math.abs(pct).toFixed(0) + '%), and prevalence ends at ' + endS.toFixed(1) + '% instead of ' + endB.toFixed(1) + '%.'
+                    : 'At the assumed current coverage, the model gives ' + num(base.cum) + ' new infections per 1,000 people over five years, taking prevalence from 15.5% to ' + endB.toFixed(1) + '%. Move a slider to see what each lever is worth.'
+            );
+
+            if (!window.Chart) return;
+            const labels = ['Now', 'Yr 1', 'Yr 2', 'Yr 3', 'Yr 4', 'Yr 5'];
+            if (!hCharts.sim) hBuild(labels, base.prev, scen.prev);
+            else { hCharts.sim.data.datasets[0].data = base.prev; hCharts.sim.data.datasets[1].data = scen.prev; hCharts.sim.update(); }
+        }
+
+        function hBuild(labels, baseData, scenData) {
+            const c = chartColors();
+            Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
+            const anim = reduce ? false : { duration: 500 };
+            const hbar = (id, rows, colors, unit) => new Chart($(id), {
+                type: 'bar',
+                data: { labels: rows.map(r => r[0]), datasets: [{ data: rows.map(r => r[1]), backgroundColor: colors, borderRadius: 6 }] },
+                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: anim,
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: x => x.raw + unit } } },
+                    scales: { x: { beginAtZero: true, ticks: { color: c.txt, callback: v => v + unit }, grid: { color: c.grid } }, y: { ticks: { color: c.txt, font: { size: 11 } }, grid: { display: false } } } }
+            });
+            const hivColors = () => { const p = chartColors().pal; return [p[2], p[0], p[3], p[1]]; };
+            const povColors = () => { const p = chartColors().pal; return [p[2], p[1], p[0], p[4], p[3]]; };
+            hCharts.hiv = hbar('#c-hiv', HIV_BARS, hivColors(), '%');
+            hCharts.pov = hbar('#c-pov', POV_BARS, povColors(), '%');
+            hCharts.hivColors = hivColors; hCharts.povColors = povColors;
+            hCharts.sim = new Chart($('#c-sim'), {
+                type: 'line',
+                data: { labels: labels, datasets: [
+                    { label: 'Current coverage', data: baseData, borderColor: c.txt, borderDash: [6, 5], pointRadius: 3, tension: .3, fill: false },
+                    { label: 'Your scenario', data: scenData, borderColor: c.line, backgroundColor: c.fill, fill: true, pointRadius: 3, pointBackgroundColor: c.line, tension: .3 }
+                ] },
+                options: { responsive: true, maintainAspectRatio: false, animation: anim,
+                    plugins: { legend: { position: 'bottom', labels: { color: c.txt, boxWidth: 12, padding: 14 } }, tooltip: { callbacks: { label: x => x.dataset.label + ': ' + x.raw.toFixed(1) + '%' } } },
+                    scales: { x: { ticks: { color: c.txt }, grid: { display: false } }, y: { title: { display: true, text: 'HIV prevalence (%)', color: c.txt }, ticks: { color: c.txt, callback: v => v + '%' }, grid: { color: c.grid }, beginAtZero: true } } }
+            });
+        }
+        function hRetheme() {
+            if (!hCharts.sim) return;
+            const c = chartColors();
+            [hCharts.hiv, hCharts.pov].forEach(ch => { ch.options.scales.x.ticks.color = c.txt; ch.options.scales.x.grid.color = c.grid; ch.options.scales.y.ticks.color = c.txt; });
+            hCharts.hiv.data.datasets[0].backgroundColor = hCharts.hivColors();
+            hCharts.pov.data.datasets[0].backgroundColor = hCharts.povColors();
+            const s = hCharts.sim;
+            s.data.datasets[0].borderColor = c.txt;
+            s.data.datasets[1].borderColor = c.line; s.data.datasets[1].backgroundColor = c.fill; s.data.datasets[1].pointBackgroundColor = c.line;
+            s.options.plugins.legend.labels.color = c.txt;
+            s.options.scales.x.ticks.color = c.txt; s.options.scales.y.ticks.color = c.txt; s.options.scales.y.grid.color = c.grid; s.options.scales.y.title.color = c.txt;
+            [hCharts.hiv, hCharts.pov, s].forEach(ch => ch.update());
+        }
+        window.addEventListener('themechange', () => setTimeout(hRetheme, 40));
+
+        ['c', 't', 'p', 's'].forEach(k => {
+            $('#h-' + k).addEventListener('input', e => { hs[k] = +e.target.value; hRender(); });
+        });
+        $('#h-reset').addEventListener('click', () => {
+            Object.keys(hDefaults).forEach(k => { hs[k] = hDefaults[k]; $('#h-' + k).value = hDefaults[k]; });
+            hRender();
+        });
+        hRender();
+        if (window.Chart && !hCharts.hiv) { /* bars are built inside hBuild on first render */ }
+        if (!window.Chart) $$('#health .chart-box').forEach(b => { b.innerHTML = '<p class="muted text-xs p-4">Charts could not load. Check your connection and refresh.</p>'; });
+
         function renderTimeline(f) {
             const list = TIMELINE.filter(t => f === 'all' || t.type === f);
             $('#timeline').innerHTML = list.length ? list.map(t =>
@@ -2222,7 +2355,7 @@
         })();
 
         const palette = $('#palette'), pIn = $('#palette-input'), pList = $('#palette-list');
-        const SECTIONS = [['about', 'About', 'user'], ['skills', 'Skills', 'layers'], ['projects', 'Projects', 'folder-code'], ['dashboard', 'Analytics dashboard', 'bar-chart-3'], ['services', 'Services & process', 'briefcase'], ['journey', 'Experience & education', 'graduation-cap'], ['github', 'GitHub activity', 'github'], ['testimonials', 'Testimonials', 'quote'], ['blog', 'Build notes', 'pen-line'], ['faq', 'FAQ', 'help-circle'], ['contact', 'Contact & start a project', 'mail']];
+        const SECTIONS = [['about', 'About', 'user'], ['skills', 'Skills', 'layers'], ['projects', 'Projects', 'folder-code'], ['dashboard', 'Analytics dashboard', 'bar-chart-3'], ['health', 'Infectious disease analysis', 'activity'], ['services', 'Services & process', 'briefcase'], ['journey', 'Experience & education', 'graduation-cap'], ['github', 'GitHub activity', 'github'], ['testimonials', 'Testimonials', 'quote'], ['blog', 'Build notes', 'pen-line'], ['faq', 'FAQ', 'help-circle'], ['contact', 'Contact & start a project', 'mail']];
         const ITEMS = [].concat(
             SECTIONS.map(s => ({ label: 'Go to ' + s[1], group: 'Section', icon: s[2], run: () => goto(s[0]) })),
             PROJECTS.map(p => ({ label: p.title, group: 'Case study', icon: 'book-open', run: () => openProject(p.id) })),
@@ -2272,7 +2405,8 @@
         const KB = [
             { k: ['who', 'about', 'yourself', 'introduce', 'hello', 'hi', 'hey'], a: 'I am Orobosa Bright Eric (Bright DeV), a full-stack web developer and data analyst. I build responsive websites, web apps and dashboards.' },
             { k: ['skill', 'stack', 'tech', 'language', 'tools', 'know'], a: SKILLS_TXT },
-            { k: ['project', 'portfolio', 'built', 'work', 'examples', 'clients'], a: 'I have shipped 9 projects: a restaurant app, two e-commerce storefronts, a real estate platform, a church network site, an AI chatbot, an automobile workshop site and an analytics dashboard. <a href="#projects" data-goto="projects">See them</a>.' },
+            { k: ['hiv', 'disease', 'infectious', 'sti', 'poverty', 'prostitution', 'sex', 'epidemiology', 'health', 'nigeria'], a: 'I built a public health analysis of poverty, sex work and infectious disease in Nigeria, with sourced figures and an interactive scenario model. <a href="#health" data-goto="health">Open it</a>.' },
+            { k: ['project', 'portfolio', 'built', 'work', 'examples', 'clients'], a: 'I have shipped 10 projects: a restaurant app, two e-commerce storefronts, a real estate platform, a church network site, an AI chatbot, an automobile workshop site, an analytics dashboard and a public health data analysis. <a href="#projects" data-goto="projects">See them</a>.' },
             { k: ['price', 'cost', 'charge', 'budget', 'rate', 'quote', 'pay', 'much'], a: 'Pricing depends on scope. Choose a budget range in <a href="#contact" data-goto="contact">the project form</a> and I will reply with a clear quote.' },
             { k: ['long', 'time', 'deadline', 'fast', 'turnaround', 'when', 'weeks'], a: 'A focused business site usually takes one to two weeks once I have your content. Apps with accounts take longer.' },
             { k: ['hire', 'available', 'freelance', 'job', 'full-time', 'employ', 'open'], a: 'Yes, I am available for freelance and full-time roles. <a href="#contact" data-goto="contact">Send me a message</a>.' },
@@ -2304,7 +2438,7 @@
         function tp(html) { const d = document.createElement('div'); d.innerHTML = html; tOut.appendChild(d); tOut.scrollTop = tOut.scrollHeight; }
         function termBoot() { tp('<span class="h">Bright DeV terminal</span>\nType <span class="p">help</span> to see commands.\n'); }
         const COMMANDS = {
-            help: () => 'Commands:\n  about        who I am\n  skills       what I work with\n  projects     list projects\n  open &lt;n&gt;     open a case study (number or name)\n  goto &lt;id&gt;    jump to a section (e.g. goto contact)\n  github       open my GitHub\n  contact      how to reach me\n  cv           download my CV\n  theme        toggle dark / light\n  hire         start a project\n  clear        clear the screen\n  ask ...      ask a question in plain English',
+            help: () => 'Commands:\n  about        who I am\n  skills       what I work with\n  projects     list projects\n  open &lt;n&gt;     open a case study (number or name)\n  goto &lt;id&gt;    jump to a section (e.g. goto health)\n  github       open my GitHub\n  contact      how to reach me\n  cv           download my CV\n  theme        toggle dark / light\n  hire         start a project\n  clear        clear the screen\n  ask ...      ask a question in plain English',
             about: () => 'Orobosa Bright Eric (Bright DeV). Full-stack web developer and data analyst.',
             whoami: () => 'visitor (welcome)',
             skills: () => esc(SKILLS_TXT).replace(/\. /g, '.\n'),
